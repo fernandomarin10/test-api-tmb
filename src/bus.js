@@ -12,17 +12,21 @@ const request = async () => {
     const response = await fetch(url);
     const json = await response.json();
     console.log("response...\n")
-    console.log(json['data'].ibus.length);
+    if (json['data'].ibus.length > 0) {
+        console.log(json['data'].ibus.length);
 
-    for (let i =0; i<json['data'].ibus.length; i++ ){
-        console.log(json['data'].ibus[i]);
+        for (let i = 0; i < json['data'].ibus.length; i++) {
+            console.log(json['data'].ibus[i]);
+        }
+
+        codigoBusProximo = json['data'].ibus[0].line;
+        codigoBusTiempo = json['data'].ibus[0]['text-ca'];
+        let stringResponse = `El bus más proximo es ${codigoBusProximo} en un tiempo ${codigoBusTiempo}`
+        console.log("\n");
+        console.log(stringResponse);
+    }else{
+        console.log('no hay buses!')
     }
-    
-    codigoBusProximo = json['data'].ibus[0].line;
-    codigoBusTiempo = json['data'].ibus[0]['text-ca'];
-    let stringResponse = `El bus más proximo es ${codigoBusProximo} en un tiempo ${codigoBusTiempo}`
-    console.log("\n");
-    console.log(stringResponse);
 }
 
 request();
